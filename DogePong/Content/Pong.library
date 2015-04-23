@@ -1,0 +1,17 @@
+ContentLibrary = 
+{
+	string Name = "Pong",
+	Array Files = 
+	[
+		"BallLogic.z",
+		"BouncyMaterial.PhysicsMaterial.data",
+		"Game.data",
+		"Level.data",
+		"PaddleController1.z",
+		"PaddleController2.z",
+		"Space.data",
+	],
+	uint64 LibraryId = 530036a7361cc324,
+	string SourceControlType = "",
+	bool ReadOnly = false,
+},

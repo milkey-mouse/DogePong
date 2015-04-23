@@ -1,0 +1,49 @@
+class PaddleController1 : ZilchComponent
+{
+    //Variables that can be set in the property window
+    [Property]
+    var PaddleSpeed : Real = 0.4;
+    [Property]
+    var MaxY : Real = 7.0;
+    
+    function Initialize(init : CogInitializer)
+    {
+        //Connect the games update event so our OnLogicUpdate function runs every loop
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(Zero.Keyboard.KeyIsDown(Keys.W))
+        {
+            if(this.Owner.Transform.Translation.Y <= this.MaxY)
+            {
+                this.Owner.Transform.Translation += Real3(0, this.PaddleSpeed, 0);
+            }
+        }
+        if(Zero.Keyboard.KeyIsDown(Keys.S))
+        {
+            if(this.Owner.Transform.Translation.Y >= -this.MaxY)
+            {
+                this.Owner.Transform.Translation -= Real3(0, this.PaddleSpeed, 0);
+            }
+        }
+        
+        
+        // Adding the Arrow Keys.  Remove if making 2 Player!
+        if(Zero.Keyboard.KeyIsDown(Keys.Up))
+        {
+            if(this.Owner.Transform.Translation.Y <= this.MaxY)
+            {
+                this.Owner.Transform.Translation += Real3(0, this.PaddleSpeed, 0);
+            }
+        }
+        if(Zero.Keyboard.KeyIsDown(Keys.Down))
+        {
+            if(this.Owner.Transform.Translation.Y >= -this.MaxY)
+            {
+                this.Owner.Transform.Translation -= Real3(0, this.PaddleSpeed, 0);
+            }
+        }
+    }
+}

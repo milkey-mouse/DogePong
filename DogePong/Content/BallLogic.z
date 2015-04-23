@@ -1,0 +1,177 @@
+class BallLogic : ZilchComponent
+{
+    //variables that can be set in the property tab
+    [Property]
+    var MaxXSpeed : Real = 40;
+    [Property]
+    var MaxYSpeed : Real = 40;
+    [Property]
+    var MinXSpeed : Real = 10;
+    [Property]
+    var MinYSpeed : Real = 10;
+    
+    //other variables
+    var P1Score : Integer = 0;
+    var P2Score : Integer = 0;
+    var Serving : Boolean = true;
+    var ServingTime : Real = 2.9999;
+    
+    function Initialize(init : CogInitializer)
+    {
+        //Connect to the games update event so OnLogicUpdate is run every frame
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        //Connect collision event to check for goals
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Serving != true)
+        {
+            //We want to cap the balls speed so it never becomes obnoxious
+            if(this.Owner.RigidBody.Velocity.X >= 0)
+            {
+                if(this.Owner.RigidBody.Velocity.X > this.MaxXSpeed)
+                {
+                    this.Owner.RigidBody.Velocity = Real3(this.MaxXSpeed,this.Owner.RigidBody.Velocity.Y,0);
+                }
+                else if(this.Owner.RigidBody.Velocity.X < this.MinXSpeed)
+                {
+                    this.Owner.RigidBody.Velocity = Real3(this.MinXSpeed,this.Owner.RigidBody.Velocity.Y,0);
+                }
+            }
+            else
+            {
+                if(this.Owner.RigidBody.Velocity.X > -this.MinXSpeed)
+                {
+                    this.Owner.RigidBody.Velocity = Real3(-this.MinXSpeed,this.Owner.RigidBody.Velocity.Y,0);
+                }
+                else if(this.Owner.RigidBody.Velocity.X < -this.MaxXSpeed)
+                {
+                    this.Owner.RigidBody.Velocity = Real3(-this.MaxXSpeed,this.Owner.RigidBody.Velocity.Y,0);
+                }
+            }
+            if(this.Owner.RigidBody.Velocity.Y >= 0)
+            {
+                if(this.Owner.RigidBody.Velocity.Y > this.MaxYSpeed)
+                {
+                    this.Owner.RigidBody.Velocity = Real3(this.Owner.RigidBody.Velocity.X, this.MaxYSpeed, 0);
+                }
+                else if(this.Owner.RigidBody.Velocity.Y < this.MinYSpeed)
+                {
+                    this.Owner.RigidBody.Velocity = Real3(this.Owner.RigidBody.Velocity.X, this.MinYSpeed, 0);
+                }
+            }
+            else
+            {
+                if(this.Owner.RigidBody.Velocity.Y > -this.MinYSpeed)
+                {
+                    this.Owner.RigidBody.Velocity = Real3(this.Owner.RigidBody.Velocity.X, -this.MinYSpeed, 0);
+                }
+                else if(this.Owner.RigidBody.Velocity.Y < -this.MaxYSpeed)
+                {
+                    this.Owner.RigidBody.Velocity = Real3(this.Owner.RigidBody.Velocity.X, -this.MaxYSpeed, 0);
+                }
+            }
+        }
+        else
+        {
+            //This code controls the countdown timer, which I dislike. I have commented it out.
+            ////We are serving the ball, first countdown to release
+            //var serveTimer = this.Space.FindObjectByName("ServeTimer");
+            //serveTimer.SpriteText.Text = "`Math.Floor(this.ServingTime + 1)`";
+            //this.ServingTime -= event.Dt;
+            //if(this.ServingTime <= 0)
+            //{
+            //Ball was released so set it in motion randomly
+            //serveTimer.SpriteText.Text = "";
+            this.Serving = false;
+            var rand = Random();
+            this.Owner.RigidBody.Velocity = Real3(rand.Range(-this.MaxXSpeed/2.0, this.MaxXSpeed/2.0), rand.Range(-this.MaxYSpeed/2.0,this.MaxYSpeed/2.0), 0);
+            //}
+        }
+        
+    }
+    
+    function OnCollisionStarted(event : CollisionEvent)
+    {
+        //We have collided, see if it is with an oject we want to do somthing about.
+        if(event.OtherObject.Name == "Goal1")
+        {
+            //Player 1's goal so player 2 scored
+            this.P2Score += 1;
+            var score = this.Space.FindObjectByName("Score2");
+            var rand = Random();
+            var selected : Real = Math.Round(rand.Range(0,4));
+            var prefix : String = "";
+            if (selected == 0)
+            {
+                prefix = "much";
+            }
+            if (selected == 1)
+            {
+                prefix = "wow";
+            }
+            if (selected == 2)
+            {
+                prefix = "such";
+            }
+            if (selected == 3)
+            {
+                prefix = "so";
+            }
+            if (selected == 4)
+            {
+                prefix = "many";
+            }
+            score.SpriteText.Text = String.Concatenate(prefix, " `this.P2Score`");
+            this.Reset();
+        }
+        else if(event.OtherObject.Name == "Goal2")
+        {
+            //Player 2's goal so player 1 scored
+            this.P1Score += 1;
+            var score = this.Space.FindObjectByName("Score1");
+            var rand = Random();
+            var selected : Real = Math.Round(rand.Range(0,4));
+            var prefix : String = "";
+            if (selected == 0)
+            {
+                prefix = "much";
+            }
+            if (selected == 1)
+            {
+                prefix = "wow";
+            }
+            if (selected == 2)
+            {
+                prefix = "such";
+            }
+            if (selected == 3)
+            {
+                prefix = "so";
+            }
+            if (selected == 4)
+            {
+                prefix = "many";
+            }
+            score.SpriteText.Text = String.Concatenate(prefix, " `this.P1Score`");
+            this.Reset();
+        }
+        else if(event.OtherObject.Name == "Outside")
+        {
+            //ball escaped the boundaries reset.
+            this.Reset();
+        }
+    }
+    
+    function Reset()
+    {
+        //Funtion to start serving again.
+        this.Owner.Transform.Translation = Real3(0,0,0);
+        this.Owner.RigidBody.Velocity = Real3(0,0,0);
+        this.Serving = true;
+        this.ServingTime = 2.9999;
+    }
+    
+}

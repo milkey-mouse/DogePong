@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "BG3",
+		uint64 ResourceId = 53846d406292dfc2,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 3104,
+		uint FrameSizeY = 1636,
+		uint FrameCount = 1,
+		float FrameDelay = 0.0833333,
+		float OriginX = 1552,
+		float OriginY = 818,
+		float PixelsPerUnit = 64,
+		bool Smoothing = true,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},

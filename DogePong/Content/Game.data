@@ -1,0 +1,19 @@
+GameSession = 
+{
+	LinkId = 
+	{
+		uint Id = 1,
+	},
+	Archetyped = 
+	{
+		string Name = "530036a7361cd403:Game",
+	},
+	Viewports = 
+	{
+	},
+	DefaultGameSetup = 
+	{
+		string StartingSpaceName = "530036a7361d17d7:Space",
+		string StartingLevelName = "530036a7361cf9b7:DogePong",
+	},
+},

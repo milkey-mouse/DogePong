@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "PaddleController1",
+		uint64 ResourceId = 5302dc1fcd4e65e1,
+	},
+},

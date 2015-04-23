@@ -1,0 +1,28 @@
+class EnemyController : ZilchComponent
+{
+    //[Property]
+    //var PaddleSpeed : Real = 0.4;
+//    var Ball: 
+//    
+//    function Initialize(init : CogInitializer)
+//    {
+//        var Ball = this.Space.FindObjectByName("Ball");
+//        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+//    }
+//
+//    function OnLogicUpdate(event : UpdateEvent)
+//    {
+//        if(this.Ball.Transform.Translation.Y < this.Owner.Transform.Translation.Y - 10.0)
+//        {
+//            this.Owner.Transform.Translation.Y - this.PaddleController2.PaddleSpeed;
+//        }
+//        
+//        if(this.Ball.Transform.Translation.Y > this.Owner.Transform.Translation.Y + 10.0)
+//        {
+//            this.Owner.Transform.Translation.Y + this.PaddleController2.PaddleSpeed;
+//        }
+//        
+        
+        
+//    }
+}

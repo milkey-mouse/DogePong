@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "doge_paddle",
+		uint64 ResourceId = 53a99d50b16c48f4,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 116,
+		uint FrameSizeY = 256,
+		uint FrameCount = 1,
+		float FrameDelay = 0.0833333,
+		float OriginX = 58,
+		float OriginY = 128,
+		float PixelsPerUnit = 64,
+		bool Smoothing = false,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},
